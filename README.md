@@ -67,11 +67,11 @@ Con este identificador, y pasando la variable que necesitamos en el body, podemo
 
 ![alt text](/img/callPostmanCompleteTwit.png)
 
-Con esta llamada, y si obtenemos el código 200 de éxito, el diagrama habrá avanzado al caso en que twitAprovat sea true: es decir, hacia otra tarea de usuario denominada "Publicar twit", en donde el proceso se mantendrá a la espera nuevamente a la siguiente tarea de usuario. Como podemos ver, la variable introducida ahora está dentro de la instancia de proceso particular de Camunda y podrá ser reutilizada por los microservicios que se conecten en nodos posteriores del flujo del diagrama.
+Con esta llamada, y si obtenemos el código 200 de éxito, el diagrama habrá avanzado al caso en que twitAprovat sea true: es decir, hacia otra tarea de usuario denominada "Publicar twit", en donde el proceso se mantendrá a la espera nuevamente a la siguiente tarea de usuario. Como podemos ver, la variable introducida ahora está dentro de la instancia de proceso particular de Camunda y podrá ser reutilizada por los microservicios que se conecten en nodos posteriores del flujo del diagrama:
 
 ![alt text](/img/definitiuTwit.png)
 
-Con este enfoque podemos delegar la lógica de estar esperando una respuesta de un usuario a Camunda y no tener que gestionarla nosotros manualmente, por ejemplo.
+Con este enfoque podemos delegar la lógica de espera de respuestas de usuario a Camunda y no tener que estar gestionándola nosotros manualmente com desarrolladores, por ejemplo. Esto simplifica el proceso de desarrollo y hace que se puedan hacer servicios (tanto front-end como back-end) más reutilizables y desacoplados.
 
 
 
