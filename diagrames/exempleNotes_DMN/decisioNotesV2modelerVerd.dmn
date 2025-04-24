@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_09tm31k" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
+  <decision id="idTaulaDMDnotes" name="Decision 1">
+    <extensionElements>
+      <biodi:bounds x="150" y="150" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" camunda:inputVariable="nota">
+        <inputExpression id="inputExpression_1" typeRef="double">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0s7vpzm">
+        <inputExpression id="LiteralExpression_10hrkgt" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" typeRef="string" />
+      <rule id="DecisionRule_16hk7dd">
+        <description>valorar en subinterval 4.5-4.99 si s'aprova estudiant</description>
+        <inputEntry id="UnaryTests_1asr46g">
+          <text>[0..4.99]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gh3veb">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0lxh8tn">
+          <text>"suspens"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jrh318">
+        <inputEntry id="UnaryTests_1ab99vo">
+          <text>[5..5.99]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wo5vcd">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dam4u4">
+          <text>"aprovat"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0brvme5">
+        <inputEntry id="UnaryTests_1abp08o">
+          <text>[6..6.99]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1llyax3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1f1h8ck">
+          <text>"bé"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sgx5ku">
+        <inputEntry id="UnaryTests_03qad7x">
+          <text>[7..8.99]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vf244r">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01h6jir">
+          <text>"notable"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01nnmsy">
+        <description>valorar MH per part de professor en user task</description>
+        <inputEntry id="UnaryTests_1p01iow">
+          <text>[9..10]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0sp2d0q">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rgh0mm">
+          <text>"excel·lent"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
