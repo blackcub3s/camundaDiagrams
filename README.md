@@ -220,9 +220,9 @@ Para terminarlas tenemos que entrar en cada instancia de proceso, clicando encim
 
 /engine-rest/task/{taskId}/complete
 
-Cuando un proceso esté en producción esto se va a solucionar programáticamente (cada tarea de usuario va a recibir su llamada al endpoint de complete una vez se haya completado, a partir de la acción del propio usario); pero al diseñar el diagrama podemos terminar con varias instancias de proceso bloqueadas porque no tenermos usuarios que las paren: manualmente hacerlo es laborioso -hay que entrar en cada actividad, mirar instancias de proceso, clicar en cada instancia, ir a "UserTasks" y ahí copiar el taskID para pasarlo al endpoint anterior.
+Cuando un proceso esté en producción esto se va a solucionar programáticamente (cada tarea de usuario va a recibir su llamada al endpoint de complete una vez se haya completado, a partir de la acción del propio usario); pero al diseñar el diagrama podemos terminar con varias instancias de proceso bloqueadas porque no tenermos usuarios que las llleven al evento de finalización del flujo del diagrama: hacerlo manualmente es laborioso -hay que entrar en cada actividad de usuario que tenga el flujo detenido en ella, mirar instancias de proceso, clicar encima del ID de cada instancia, y entonces ir a "UserTasks": ahí copiar el taskID para pasarlo al endpoint que se ha mostrado justo antes de este párrafo.
 
-La opción rápida para solucionar esto, que no sea borrar el diagrama en el cockpit de camunda no existe (que yo sepa). Veamos el estado actual de la séptima versión del diagrama:
+La opción rápida para solucionar esto, que no sea borrar el diagrama en el cockpit de camunda, según mi leal saber y entender no existe. Veamos el estado actual de la séptima versión del diagrama:
 
 ![alt text](img/image11.png)
 
@@ -238,4 +238,4 @@ Luego obtendremos un array con 10 objects dentro, tal que así:
 
 ![alt text](img/image12_.png)
 
-NOS TOPAMOS QUE LA CORS POLICY NO NOS DEJA CONTINYAR ASÍ QUE LO DEJAMOS ESTAR :D
+NOS TOPAMOS QUE LA CORS POLICY NO NOS DEJA CONTINYAR ASÍ QUE LO DEJAMOS ESTAR :D 
