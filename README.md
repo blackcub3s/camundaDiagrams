@@ -10,7 +10,7 @@ Tanto BPMN y DMN son creados y mantenidos por OMG (Object Management Group), org
 
 El ejercicio siguiente [link](https://academy.camunda.com/c7-platform-java/843268) pide hacer un sistema de QA para controlar qué hacen los empleados: cada vez que un empleado necesita publicar algo lo evalúa él.
 
-La versión hecha inicialmente asume que la evaluación la hace un modelo de NLP y, que si no la peude hacer, la hará un empleado de RRHH (en definitiva, una interpretación libre del enunciado) que se puede consultar aquí pero no es relevante para los objetivos del curso: [link](/img/diagramaTwitter.png). Una versión más sencilla es esta, parecida a la que se recomienda en el curso:  
+La versión hecha inicialmente asume que la evaluación la hace un modelo de NLP y, que si no la peude hacer, la hará un empleado de RRHH (en definitiva, una interpretación libre del enunciado) que se puede consultar aquí pero no es relevante para los objetivos del curso: [link](/img/diagramaTwitter.png). Una versión más sencilla es esta, parecida a la que se recomienda en el curso: 
 
 ![no cargo](/img/imatgeTwitterSenzill.png)
 
@@ -93,24 +93,32 @@ Las service tasks se puieden definir o implementar de distintsas formas. La más
 
 # Trabajando con eventos
 
-Podemos encontrar distintos tipos de eventos (ver la documentación: [link](https://docs.camunda.org/manual/latest/reference/bpmn20/#events))
+Podemos encontrar distintos tipos de eventos (ver la documentación: [link](https://docs.camunda.org/manual/latest/reference/bpmn20/#events)):
 
 ![imagen no cargó](img/tiposDeEventos.png)
 
-El timer boundary event (de tipo intermediate) lo utilizamos bastante. Pero existen otros. Vemos los dos principales de este diagrama:
+El timer boundary event (de tipo intermediate) lo utilizamos bastante.
 
-![img.png](img/img.png)
 
-Es importante considerar que el de la flecha azul es el "non interrupting timing event", es decir no hace que el flujo que de atascado en la tarea de donde sale el 
-event. En cambio el de la flecha roja es el "interrupting timing event", que sí para el flujo.
+Hay que diferenciar entre el "*timer **boundary** intermediate event*" y el "*timer **catch** intermediate event*"_ 
 
+- *Timer **boundary** intermediate event*: se asocia con una tarea y se pone al lado de ella -pegado-, generalmente de usuario: consigue que si el usuario no la completa en un tiempo de terminado, ésta siga con el flujo normal del programa sin tener que mandar nosotros la señal rest para terminarla (llamada a rest endpoint "complete"). Es la timer event que utilizamos más en nuestro caso particular. Véase un ejemplo de hacer que un profesor tenga 15 días para poner una matrícula de honor a un estudiante; si no la pone en este período de tiempo, el diagrama seguirá su curso al microservicio rojo debajo de la imagen:
+
+![alt text](img/image13.png)
+
+- *Timer **catch** intermediate event*: este evento no se asocia a una tarea, sino que va después de una de ellas. No se suele usar pero un ejemplo sería este:
+
+
+
+Existe un tercer tipo, que no solemos usarlo, que me parece interesante: el *Timer **boundary** intermediate event (NON INTERRUPTING)*:  Es como el *Timer **boundary** intermediate event*, pero a diferencia de este no hace que el flujo quede atascado en la tarea asociada al evento. Este se identifica con el círculo escrito en líneas discontinuas. A continuación una vista de la interfaz de camunda modeler 5 para definir 15 minutos de espera:
+
+![alt text](img/imageEspera.png)
 
 # DMN
 
 ## Explicación general
 
-Podemos simplificar los procesos de decision con una tabla DMN. Tanto el lenguaje BPMN de modelado, como el lenguaje de decisión mediante
-tabllas (DMN) están perfectamente soportados por camunda.
+Podemos simplificar los procesos de decision con una tabla DMN. Tanto el lenguaje BPMN de modelado, como el lenguaje de decisión mediante tablas (DMN) están perfectamente soportados por camunda.
 
 Así las cosas podemos convertir este árbol de decision con la XOR gateway:
 
@@ -121,13 +129,12 @@ En esta tabla mediante DMN:
 ![img.png](img/qawpe.png)
 
 Para hacerlo necesitamos un tipo de task especial, la *business rule task* que, mediante el ID de la tabla
-DMN, convierte el diagrama anterior  que antes tenia la XOR gate en algo mucho más sencillo:
+DMN, convierte el diagrama anterior  que antes tenia la XOR gate conectada con 4 tareas o actividades de servicio, en una sola tarea de negocio -que luego vincularemos con la tabla DMN-:
 
 ![img.png](img/diagramaAmbBusinessRule.png)
 
 
-Para entender las reglas expresadas en una tabla de decision la primera columna es la condición (cada fila es una regla) 
-y la segunda columna es el resultado de esa regla. Por ejemplo, podemos verlo en esta tabla:
+Para entender las reglas expresadas en una tabla de decision, si solo tenemos una entrada y una salida, la primera columna es la condición (cada fila es una regla) y la segunda columna es el resultado de esa regla. Por ejemplo, podemos verlo en esta tabla:
 
 ![img.png](img/img.png)
 
@@ -212,6 +219,8 @@ Análogamente hay que hacer el despliegue también al camunda platform del diagr
 
 ![alt text](img/despliegueBPMN.png)
 
+
+
 ## Limpiar todas las instancias de proceso de un proceso en cockpit en la fase de diseño (tanto última versión de la definición de proceso como en versiones anteriores)
 
 Para hacer pruebas, estamos todo el rato generando instancias de proceso que no terminan si hay tareas de usuario.
@@ -220,22 +229,18 @@ Para terminarlas tenemos que entrar en cada instancia de proceso, clicando encim
 
 /engine-rest/task/{taskId}/complete
 
-Cuando un proceso esté en producción esto se va a solucionar programáticamente (cada tarea de usuario va a recibir su llamada al endpoint de complete una vez se haya completado, a partir de la acción del propio usario); pero al diseñar el diagrama podemos terminar con varias instancias de proceso bloqueadas porque no tenermos usuarios que las llleven al evento de finalización del flujo del diagrama: hacerlo manualmente es laborioso -hay que entrar en cada actividad de usuario que tenga el flujo detenido en ella, mirar instancias de proceso, clicar encima del ID de cada instancia, y entonces ir a "UserTasks": ahí copiar el taskID para pasarlo al endpoint que se ha mostrado justo antes de este párrafo.
-
-La opción rápida para solucionar esto, que no sea borrar el diagrama en el cockpit de camunda, según mi leal saber y entender no existe. Veamos el estado actual de la séptima versión del diagrama:
-
-![alt text](img/image11.png)
+Cuando un proceso esté en producción esto se va a solucionar programáticamente (cada tarea de usuario va a recibir su llamada al endpoint de complete una vez se haya completado, a partir de la acción del propio usario); pero al diseñar el diagrama podemos terminar con varias instancias de proceso bloqueadas porque no tenermos usuarios que las paren: manualmente hacerlo es laborioso -hay que entrar en cada actividad, mirar instancias de proceso, clicar en cada instancia, ir a "UserTasks" y ahí copiar el taskID para pasarlo al endpoint anterior. La solución para ello está en definir *intermediate timer events*, como veremos luego.
 
 
-Como podemos ver en la imagen anterior, en la séptima versión tenemos 6 instancias de proceso. Deberíamos hacer llamad POST a "complete" 6 veces (y también para instancias de proceso de definiciones antgeriores del diagrama, que ya anticipo al lecotr que son 10 en total). Es decir, habría que hacer 10 copy paste y diez llamadas POST manuales si queremos dejar el diagrama de definition Key "idDiagramaDMN" sin instancias de proceso activas.
+# Diagramas más complejos
 
-Podemos crear un script para evitarlo. Primero de todo hay que acceder a las 10 instancias de proceso de golpe y obtener su *definitionId* en este endpoint:
+# Service task + business rule + timer event 
 
-```
-/engine-rest/process-instance?processDefinitionKey=idDiagramaDMN
-```
-Luego obtendremos un array con 10 objects dentro, tal que así:
+Modificaremos el diagrama anterior del profesor para que tenga unos instantes para asignar la matrícula de honor o asignar el suspenso, si se da el caso, desde que recibe el flujo en las tareas de usuario.
 
-![alt text](img/image12_.png)
+De este modo solucionaremos el tema de tareas de usuario no completadas (de hecho es así como se hace). A una persona se le puede dar un tiempo limitado para hacer una tarea; pero si no la efectúa el flujo del diagrama no podría continuar. Por esa razón le dejamos un tiempo para que la realice y si no lo hace se sigue a la siguiente actividad. Esto es típico en las administraciones: si un expediente no se ve resuelto por un funcionario en un plazo determinado, este procedimiento pasa a una fase distinta o se archiva pero no se para *sine die*.
 
-NOS TOPAMOS QUE LA CORS POLICY NO NOS DEJA CONTINYAR ASÍ QUE LO DEJAMOS ESTAR :D 
+Además, también eliminaremos la tarea de usuario intermedia que nunca usábamos más que para visualizar los datos y finalmente añadiremos al final del flujo una tarea de servicio que recogerá los datos de usuario una vez sean introducidos o el timer boundary event haga que el flujo avance sin respuesta del mismo.
+
+
+
