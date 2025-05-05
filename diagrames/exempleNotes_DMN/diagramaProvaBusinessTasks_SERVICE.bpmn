@@ -21,7 +21,8 @@
     <bpmn:scriptTask id="Activity_1po9zjs" name="S&#39;assigna nota aleatòriament entre 0 i 10" scriptFormat="JavaScript">
       <bpmn:incoming>Flow_0e71w8x</bpmn:incoming>
       <bpmn:outgoing>Flow_0ddhpny</bpmn:outgoing>
-      <bpmn:script>execution.setVariable("nota", Number((Math.random()*10).toFixed(2)));</bpmn:script>
+      <bpmn:script>execution.setVariable("nota", Number((Math.random()*10).toFixed(2)));
+</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_1iuzise" default="Flow_1h3emt4">
       <bpmn:incoming>Flow_0wu4mfp</bpmn:incoming>
@@ -41,11 +42,30 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0vnws07" sourceRef="Activity_1bte3a8" targetRef="Activity_1j2h0yp" />
     <bpmn:sequenceFlow id="Flow_1h3emt4" sourceRef="Gateway_1iuzise" targetRef="Activity_1j2h0yp" />
-    <bpmn:serviceTask id="Activity_1j2h0yp" name="judici">
+    <bpmn:serviceTask id="Activity_1j2h0yp" name="mitjana etapa educativa">
       <bpmn:extensionElements>
         <camunda:connector>
-          <camunda:connectorId>http-connector</camunda:connectorId>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url (endpoint microservei)">#{urlBaseProjecte}/api/mitjanaEtapaEducativa</camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">var nota = execution.getVariable("nota");
+var jsonBodyPeticio = {"novaNota" : nota};
+JSON.stringify(jsonBodyPeticio);</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="content-type">application/json</camunda:entry>
+                <camunda:entry key="accept">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+          </camunda:inputOutput>
         </camunda:connector>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="codiEstat">
+            <camunda:script scriptFormat="JavaScript">codiEstat</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1h3emt4</bpmn:incoming>
       <bpmn:incoming>Flow_1o2z7af</bpmn:incoming>
@@ -97,9 +117,6 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="idDiagramaDMN">
-      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="182" y="302" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ubgh4t_di" bpmnElement="Activity_1po9zjs" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="270" y="280" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -127,6 +144,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1s0wdq0_di" bpmnElement="Event_17wo42z">
         <dc:Bounds x="1052" y="302" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="122" y="302" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0b5i65d_di" bpmnElement="Association_0b5i65d">
         <di:waypoint x="616" y="220" />
@@ -167,7 +187,7 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0e71w8x_di" bpmnElement="Flow_0e71w8x">
-        <di:waypoint x="218" y="320" />
+        <di:waypoint x="158" y="320" />
         <di:waypoint x="270" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ddhpny_di" bpmnElement="Flow_0ddhpny">

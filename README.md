@@ -244,3 +244,43 @@ Además, también eliminaremos la tarea de usuario intermedia que nunca usábamo
 
 ![alt text](/img/image14.png)
 
+## Creación de la service task: mitjana etapa educativa
+
+En esta service task "mitjana etapa educativa", a través de camunda modeler 5, vamos a llamar a un microservicio en java.
+
+![alt text](image.png)
+
+Luego definiremos los connector inputs, que es como armaremos la petición POST para mandarsela al microservicio mitjanaEtapaEducativa:
+
+TO DO
+
+Finalemnte el connector output:
+
+Luego haremos deploy al camunda de la empresa.
+
+TO DO 
+
+## Creación del microservicio y salida a internet
+
+Nuestro microservicio está en el lcoalhost y no vamos a utilizar la infraestructura de la empresa. Así, para ello usaermos ngrok para sacar a internet nuestros endpoints locales rápidamente para hacer pruebas:
+
+Para ello creamos nuestra cuenta de ngrok, isntalamos ngrok en nuestro sistema, y en la url siguiente [https://dashboard.ngrok.com/get-started/your-authtoken](https://dashboard.ngrok.com/get-started/your-authtoken) vamos a obtener el token que aqui aparece anonimizado y corremos este comando (sin anonimizar) en nuestra terminal:
+
+```
+ngrok config add-authtoken $YOUR_AUTHTOKEN
+```
+Luego usamos el ephemeral domain https://dashboard.ngrok.com/get-started/setup/windows:
+
+![alt text](img/imageEphemeral.png)
+
+
+Y lo corremos en la terminal también pero adaptado el puerto a spring boot (que es el 8080):
+```
+ngrok http http://localhost:8080
+```
+
+Y si todo va bien tendremos esto:
+
+![alt text](img/imageNgrok.png)
+
+
