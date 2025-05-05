@@ -323,6 +323,14 @@ Acto seguido calculará la media aritmética de esa nota conjuntamente con otras
 
 ``` {"notaMitjana" : 6.32} ```
 
-Todas las llamadas que hagamos a localhost:8080 desde nuestro ordenador, podrán hacerse tambie´n desde el mismo (o desde cualquier otro) al dominio https://a9af-2a...etc. Cuidado que esta URL base puede ser reseteada, no es un dominio estático y se deberá ajustar en reejecuciones de este programa.
+Todas las llamadas que hagamos a localhost:8080 desde nuestro ordenador, podrán hacerse también desde el ordenador donde corra este proyecto (¡o desde cualquier otro que no tenga el proyecto corriendo!) al dominio https://a9af-2a...etc. Cuidado que esta URL base puede ser reseteada, no es un dominio estático y se deberá ajustar en reejecuciones de este programa consultando ngrok: https://dashboard.ngrok.com/endpoints
 
-Ahora vamos a informar a camunda con el inicio del a tarea de servicio de la base URL al inciiarla:
+
+Aquí está el controlador del microservicio:
+
+https://github.com/blackcub3s/camundaDiagrams/blob/2abb86b834acb2b1c8492989714f59d88b530496/tasquesServei/mitjanaEtapaEducativa/src/main/java/com/example/mitjanaEtapaEducativa/Controlador.java#L11-L29
+
+
+Y aquí el servicio del microservicio (valga la redundancia):
+
+https://github.com/blackcub3s/camundaDiagrams/blob/2abb86b834acb2b1c8492989714f59d88b530496/tasquesServei/mitjanaEtapaEducativa/src/main/java/com/example/mitjanaEtapaEducativa/Servei.java#L8-L30
