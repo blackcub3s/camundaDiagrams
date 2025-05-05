@@ -238,9 +238,9 @@ Cuando un proceso esté en producción esto se va a solucionar programáticament
 
 Modificaremos el diagrama anterior del profesor para que tenga unos instantes para asignar la matrícula de honor o asignar el suspenso, si se da el caso, desde que recibe el flujo en las tareas de usuario.
 
-De este modo solucionaremos el tema de tareas de usuario no completadas (de hecho es así como se hace). A una persona se le puede dar un tiempo limitado para hacer una tarea; pero si no la efectúa el flujo del diagrama no podría continuar. Por esa razón le dejamos un tiempo para que la realice y si no lo hace se sigue a la siguiente actividad. Esto es típico en las administraciones: si un expediente no se ve resuelto por un funcionario en un plazo determinado, este procedimiento pasa a una fase distinta o se archiva pero no se para *sine die*.
+De este modo solucionaremos el tema de tareas de usuario no completadas (de hecho es así como se hace). A una persona se le puede dar un tiempo limitado para hacer una tarea; pero si no la efectúa el flujo del diagrama no podría continuar. Por esa razón le dejamos un tiempo para que la realice y si no lo hace se sigue a la siguiente actividad de forma automática. Esto es típico en las administraciones: si un expediente no se ve resuelto por un funcionario en un plazo determinado, este procedimiento pasa a una fase distinta o se archiva, pero no se debería parar *sine die*.
 
 Además, también eliminaremos la tarea de usuario intermedia que nunca usábamos más que para visualizar los datos y finalmente añadiremos al final del flujo una tarea de servicio que recogerá los datos de usuario una vez sean introducidos o el timer boundary event haga que el flujo avance sin respuesta del mismo.
 
-
+![alt text](/img/image14.png)
 

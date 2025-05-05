@@ -42,6 +42,11 @@
     <bpmn:sequenceFlow id="Flow_0vnws07" sourceRef="Activity_1bte3a8" targetRef="Activity_1j2h0yp" />
     <bpmn:sequenceFlow id="Flow_1h3emt4" sourceRef="Gateway_1iuzise" targetRef="Activity_1j2h0yp" />
     <bpmn:serviceTask id="Activity_1j2h0yp" name="judici">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1h3emt4</bpmn:incoming>
       <bpmn:incoming>Flow_1o2z7af</bpmn:incoming>
       <bpmn:incoming>Flow_0vnws07</bpmn:incoming>
@@ -123,6 +128,14 @@
       <bpmndi:BPMNShape id="Event_1s0wdq0_di" bpmnElement="Event_17wo42z">
         <dc:Bounds x="1052" y="302" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0b5i65d_di" bpmnElement="Association_0b5i65d">
+        <di:waypoint x="616" y="220" />
+        <di:waypoint x="632" y="192" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_06txgeu_di" bpmnElement="Association_06txgeu">
+        <di:waypoint x="612" y="430" />
+        <di:waypoint x="632" y="457" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_0kuv6tn_di" bpmnElement="Association_0kuv6tn">
         <di:waypoint x="1081" y="306" />
         <di:waypoint x="1090" y="296" />
@@ -145,6 +158,14 @@
         <dc:Bounds x="550" y="470" width="164" height="27" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_00ai2yv_di" bpmnElement="TextAnnotation_00ai2yv">
+        <dc:Bounds x="1090" y="220" width="100" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_01e9v2b_di" bpmnElement="TextAnnotation_01e9v2b">
+        <dc:Bounds x="820" y="80" width="100" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0e71w8x_di" bpmnElement="Flow_0e71w8x">
         <di:waypoint x="218" y="320" />
         <di:waypoint x="270" y="320" />
@@ -152,6 +173,10 @@
       <bpmndi:BPMNEdge id="Flow_0ddhpny_di" bpmnElement="Flow_0ddhpny">
         <di:waypoint x="370" y="320" />
         <di:waypoint x="420" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gx3qh0_di" bpmnElement="Flow_1gx3qh0">
+        <di:waypoint x="1088" y="320" />
+        <di:waypoint x="1182" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0wu4mfp_di" bpmnElement="Flow_0wu4mfp">
         <di:waypoint x="520" y="320" />
@@ -170,14 +195,6 @@
       <bpmndi:BPMNEdge id="Flow_1h3emt4_di" bpmnElement="Flow_1h3emt4">
         <di:waypoint x="625" y="320" />
         <di:waypoint x="860" y="320" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0b5i65d_di" bpmnElement="Association_0b5i65d">
-        <di:waypoint x="616" y="220" />
-        <di:waypoint x="632" y="192" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_06txgeu_di" bpmnElement="Association_06txgeu">
-        <di:waypoint x="612" y="430" />
-        <di:waypoint x="632" y="457" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1o2z7af_di" bpmnElement="Flow_1o2z7af">
         <di:waypoint x="800" y="220" />
@@ -207,18 +224,6 @@
         <di:waypoint x="960" y="320" />
         <di:waypoint x="1052" y="320" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1gx3qh0_di" bpmnElement="Flow_1gx3qh0">
-        <di:waypoint x="1088" y="320" />
-        <di:waypoint x="1182" y="320" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_00ai2yv_di" bpmnElement="TextAnnotation_00ai2yv">
-        <dc:Bounds x="1090" y="220" width="100" height="84" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_01e9v2b_di" bpmnElement="TextAnnotation_01e9v2b">
-        <dc:Bounds x="820" y="80" width="100" height="55" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
