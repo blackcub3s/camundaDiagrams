@@ -246,31 +246,48 @@ Además, también eliminaremos la tarea de usuario intermedia que nunca usábamo
 
 ## Creación de la service task: mitjana etapa educativa
 
-En esta service task "mitjana etapa educativa", a través de camunda modeler 5, vamos a llamar a un microservicio en java.
+En esta service task "mitjana etapa educativa", a través de camunda modeler 5, vamos a llamar a un microservicio en java. Este servicio se va a orquestrar mediante llamadas HTTP de tipo REST, con una implementación de *connector*;
 
-![alt text](image.png)
+![alt text](img/imagee.png)
 
-Luego definiremos los **connector inputs**, que es como mediante la service task del diagrama subido a camunda platform armaremos la petición POST para mandársela al microservicio mitjanaEtapaEducativa:
 
-![alt text](image-1.png)
+> 📦 **Nota sobre el entorno del microservicio**
+>
+> Como veremos luego el microservicio, este estará corriendo en el `localhost:8080` (no lo desplegamos en el sistema de la empresa) mientras que el Camunda está en la infraestructura cloud de la empresa. Por lo tanto, la única forma de poder hacer llamada es, en nuestro caso, salir públicamente a internet a través de una IP dinámica usando una URL generada con *ngrok*, como veremos en el siguiente apartado.
+>
+> En el apartado actual nos seguiremos centrando en configurar la *Service Task* **"mitjana etapa educativa"** para que pueda hacer una llamada al microservicio.
 
-*Primero* tenemos los connector inputs. Aqui simplente definimos la URL a la que haremos la petición POST desde el camunda platform del cockpit de camunda. La URL de la siguiente captura (en ambar) tiene el endpoint a la derecha (en rojo), y ese endpoint va a llamar al microservicio del backend de la caputra del controlador del microservicio como vemos abajo (en verde):
 
-![alt text](img/ConnectorInnputsURLIcontroler.png)
+
+Habiendo dicho la forma como se conecta esta service task al back end, dado que usamos **connector**, hay que definir manualmente varios parçámetros en **connector inputs**. TODOS ellos se deben escribir exactamente comot al, sino no funcionan:
+
+
+![alt text](img/image-1.png)
+
+*Primero* tenemos la **url**. Aqui simplemente definimos la URL a la que haremos la petición POST desde el camunda platform del cockpit de camunda. La URL de la siguiente captura (en ambar, se tomará de la instancia de proceso) tiene el endpoint a la derecha (en rojo), y ese endpoint va a llamar al microservicio del backend de la caputra del controlador del microservicio como vemos abajo (en verde):
+
+![alt text](img/ConnectorInputete.png)
 
 *Segundo*, tenemos el payload o el body de la petición POST que camunda platform hará a nuestro microservicio:
 
-![alt text](image-2.png)
+![alt text](img/image-2.png)
 
-Esta anterior captura, ese jsonBodyPeticio, simplemente estará entrando por la línea del controlador:
+Esta anterior captura, ese jsonBodyPeticio, simplemente estará entrando por la línea del controlador con el nombre de _entradaNovaNota_:
 
 https://github.com/blackcub3s/camundaDiagrams/blob/3a991d3fa91452846e25e6a4cb815dd9b22bb79f/tasquesServei/mitjanaEtapaEducativa/src/main/java/com/example/mitjanaEtapaEducativa/Controlador.java#L24
 
-Finalmente el **connector output**:
+*Tercero* y *cuarto*, tenemos method y headers con sus map entries, respectivamente. Method informa que haremos una solicitud POST y headers informa como van a pasar los datos (tanto en la petición como la response, se hará en formato JSON -pares clave:valor, del estilo javascript object-):
 
-Luego haremos deploy al camunda de la empresa.
+![alt text](img/image-3.png)
 
-TO DO 
+Finalmente **connector outputs**. Definimos el _statusCode_ que simplemente recoge el código de esatdo del microservicio al que habíamos llamado; y luego la variable _notaMitjana_ que recogerá los datos que el microservicio devuelve en forma de json, como esto: **{"notaMitjana" : 6.234}**. 
+
+NOTA: MUY importante que uses stateCode y no otros nombres como codiEstat. Y FEEL por lo visto no lo soporta el camunda 7 de la emrpesa.
+
+![alt text](img/connectorOutputs.png)
+
+Finalmente ya podemos deployear el diagrama BPMN (la decision definition ya está deployeada de antes).
+
 
 ## Creación del microservicio y salida a internet
 
@@ -297,9 +314,14 @@ Y si todo va bien tendremos esto:
 
 Y ya podremos hacer llamadas POST desde cualquier origen en internet. Por lo tanto, ahora nuestro microservicio en springboot será accesible desde camunda, desde la service task del diagrama.
 
-El microservicio en cuestión simplemente tomará los datos del "connector input" que tendrán la estructura en JSON.
+El microservicio en cuestión simplemente tomará los datos del "connector input" que tendrán la estructura en JSON. Por ejemplo:
 
 ``` {"nota" : 9.65} ```
+
+Acto seguido calculará la media aritmética de esa nota conjuntamente con otras notas internas del microservicio (a modo de prueba) y devolverá por le body de la response POST lo siguiente (el numero es variable)
+
+
+``` {"notaMitjana" : 6.32} ```
 
 Todas las llamadas que hagamos a localhost:8080 desde nuestro ordenador, podrán hacerse tambie´n desde el mismo (o desde cualquier otro) al dominio https://a9af-2a...etc. Cuidado que esta URL base puede ser reseteada, no es un dominio estático y se deberá ajustar en reejecuciones de este programa.
 

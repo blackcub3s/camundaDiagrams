@@ -25,5 +25,5 @@ public class Controlador {
         Map<String, Double> notaMitjana = servei.calculNotaMitjana(notaE);
         return new ResponseEntity<>(notaMitjana, HttpStatus.OK);
     }
-    
+
 }

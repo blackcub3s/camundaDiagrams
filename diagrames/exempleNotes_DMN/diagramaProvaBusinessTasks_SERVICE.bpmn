@@ -46,7 +46,7 @@
       <bpmn:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url (endpoint microservei)">#{urlBaseProjecte}/api/mitjanaEtapaEducativa</camunda:inputParameter>
+            <camunda:inputParameter name="url">#{urlBaseProjecte}/api/mitjanaEtapaEducativa</camunda:inputParameter>
             <camunda:inputParameter name="payload">
               <camunda:script scriptFormat="JavaScript">var nota = execution.getVariable("nota");
 var jsonBodyPeticio = {"novaNota" : nota};
@@ -59,13 +59,15 @@ JSON.stringify(jsonBodyPeticio);</camunda:script>
                 <camunda:entry key="accept">application/json</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
+            <camunda:outputParameter name="statusCode">
+              <camunda:script scriptFormat="JavaScript">statusCode</camunda:script>
+            </camunda:outputParameter>
+            <camunda:outputParameter name="notaMitjana">
+              <camunda:script scriptFormat="JavaScript">S(response).prop("notaMitjana").numberValue()</camunda:script>
+            </camunda:outputParameter>
           </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
-        <camunda:inputOutput>
-          <camunda:outputParameter name="codiEstat">
-            <camunda:script scriptFormat="JavaScript">codiEstat</camunda:script>
-          </camunda:outputParameter>
-        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1h3emt4</bpmn:incoming>
       <bpmn:incoming>Flow_1o2z7af</bpmn:incoming>
