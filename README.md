@@ -250,11 +250,23 @@ En esta service task "mitjana etapa educativa", a través de camunda modeler 5, 
 
 ![alt text](image.png)
 
-Luego definiremos los connector inputs, que es como armaremos la petición POST para mandarsela al microservicio mitjanaEtapaEducativa:
+Luego definiremos los **connector inputs**, que es como mediante la service task del diagrama subido a camunda platform armaremos la petición POST para mandársela al microservicio mitjanaEtapaEducativa:
 
-TO DO
+![alt text](image-1.png)
 
-Finalemnte el connector output:
+*Primero* tenemos los connector inputs. Aqui simplente definimos la URL a la que haremos la petición POST desde el camunda platform del cockpit de camunda. La URL de la siguiente captura (en ambar) tiene el endpoint a la derecha (en rojo), y ese endpoint va a llamar al microservicio del backend de la caputra del controlador del microservicio como vemos abajo (en verde):
+
+![alt text](img/ConnectorInnputsURLIcontroler.png)
+
+*Segundo*, tenemos el payload o el body de la petición POST que camunda platform hará a nuestro microservicio:
+
+![alt text](image-2.png)
+
+Esta anterior captura, ese jsonBodyPeticio, simplemente estará entrando por la línea del controlador:
+
+https://github.com/blackcub3s/camundaDiagrams/blob/3a991d3fa91452846e25e6a4cb815dd9b22bb79f/tasquesServei/mitjanaEtapaEducativa/src/main/java/com/example/mitjanaEtapaEducativa/Controlador.java#L24
+
+Finalmente el **connector output**:
 
 Luego haremos deploy al camunda de la empresa.
 
@@ -283,4 +295,12 @@ Y si todo va bien tendremos esto:
 
 ![alt text](img/imageNgrok.png)
 
+Y ya podremos hacer llamadas POST desde cualquier origen en internet. Por lo tanto, ahora nuestro microservicio en springboot será accesible desde camunda, desde la service task del diagrama.
 
+El microservicio en cuestión simplemente tomará los datos del "connector input" que tendrán la estructura en JSON.
+
+``` {"nota" : 9.65} ```
+
+Todas las llamadas que hagamos a localhost:8080 desde nuestro ordenador, podrán hacerse tambie´n desde el mismo (o desde cualquier otro) al dominio https://a9af-2a...etc. Cuidado que esta URL base puede ser reseteada, no es un dominio estático y se deberá ajustar en reejecuciones de este programa.
+
+Ahora vamos a informar a camunda con el inicio del a tarea de servicio de la base URL al inciiarla:

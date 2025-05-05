@@ -18,16 +18,12 @@ public class Controlador {
         this.servei = servei;
     }
 
-
-
     @PostMapping("/mitjanaEtapaEducativa")
     public ResponseEntity<Map<String, Double>> assignaNotaGlobal(@RequestBody Map<String, Double> entradaNovaNota) {
         Double notaE = entradaNovaNota.get("novaNota"); //6.33, 9.66
+        System.out.println("Nova nota "+notaE);
         Map<String, Double> notaMitjana = servei.calculNotaMitjana(notaE);
         return new ResponseEntity<>(notaMitjana, HttpStatus.OK);
     }
-
-
-
-
+    
 }
