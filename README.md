@@ -280,7 +280,10 @@ https://github.com/blackcub3s/camundaDiagrams/blob/3a991d3fa91452846e25e6a4cb815
 
 ![alt text](img/image-3.png)
 
-Finalmente **connector outputs**. Definimos el _statusCode_ que simplemente recoge el código de esatdo del microservicio al que habíamos llamado; y luego la variable _notaMitjana_ que recogerá los datos que el microservicio devuelve en forma de json, como esto: **{"notaMitjana" : 6.234}**. 
+Finalmente **connector outputs**. Definimos el _statusCode_ que simplemente recoge el código de esatdo del microservicio (back-end) al que habíamos llamado desde la service task (que actuaría como cliente). Por ejemplo, desde el cliente mandaríamos **{"nota" : 3}**; y luego la variable _notaMitjana_ recogería los datos que el microservicio devuolvería en forma de json (**{"notaMitjana" : 6.234}**. ). Si lo hicieramos con postman tendríamos esto:
+
+![alt text](img/cridaPostman.png)
+
 
 NOTA: MUY importante que uses stateCode y no otros nombres como codiEstat. Y FEEL por lo visto no lo soporta el camunda 7 de la emrpesa.
 
